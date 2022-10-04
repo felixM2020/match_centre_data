@@ -1,6 +1,6 @@
 # match_centre_data
 A project scraping and cleaning data off of the local cricket match centre website.
-Whilst this works for all match centre systems, [this](https://matchcentre.cricketact.com.au/) link was used for the data cleaning and analysis part of the repository.
+Whilst this works for all match centre systems, this [link](https://matchcentre.cricketact.com.au/) was used for the data cleaning and analysis part of the repository.
 
 ## Single Game Scraper
 Used to scrape an individual game off of the match centre system and convert the data to seperate dataframes, specifically divided into match details, individual batting and bowling results.
