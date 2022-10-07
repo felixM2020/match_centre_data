@@ -1,8 +1,19 @@
+from lib2to3.pgen2 import driver
 from bs4 import BeautifulSoup
 import requests
 import match_info_scraper as mi
 import batting_scraper as bt
 import bowling_scraper as bw
+
+from selenium import webdriver
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+import time
+
+
 
 
 # Match information
@@ -25,19 +36,25 @@ def create_list_dict_with_keys(keys):
         output[key] = []
 
 def create_soup(link):
-    page = requests.get(link)
-    return BeautifulSoup(page.text, 'html.parser')
+    
+    options = Options()
+    options.page_load_strategy = 'normal'
+    driver = webdriver.Chrome(options=options)
+    driver.get(link)
+    time.sleep(2)
+    html = driver.page_source
+
+    
+    return BeautifulSoup(html, 'html.parser')
 
 class match_centre_page:
 
     def __init__(self, link):
         self.soup = create_soup(link)
-
-    match_info_dic = create_list_dict_with_keys(match_columns)
-
-    batting_dic = create_list_dict_with_keys(bat_columns)
-
-    bowling_dic = create_list_dict_with_keys(bowl_columns)
+        print(self.soup.prettify())
+        self.match_info_dic = create_list_dict_with_keys(match_columns)
+        self.batting_dic = create_list_dict_with_keys(bat_columns)
+        self.bowling_dic = create_list_dict_with_keys(bowl_columns)
 
 
     def fill_dic(self, fill_function):
@@ -62,5 +79,8 @@ class match_centre_page:
         self.fill_bowling_dic()
         
     
+page = match_centre_page(test_link)
 
-    
+page.fill_match_data_dic()
+
+print(page.match_info_dic)
